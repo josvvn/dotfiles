@@ -45,13 +45,8 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 let g:OmniSharp_server_stdio = 1
 
 " Key mapping
-let mapleader = " "
-"nnoremap <leader>h : wincmd h <CR>
-"nnoremap <leader>j : wincmd j <CR>
-"nnoremap <leader>k : wincmd k <CR>
-"nnoremap <leader>l : wincmd l <CR>
-nnoremap <silent> <Leader>gh :YcmCompleter GoTo<CR>
-nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
+" nnoremap <silent> <Leader>gh :YcmCompleter GoTo<CR>
+" nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 nnoremap <C-p> :NERDTreeToggle<CR>
 nnoremap <C-j> :tabr<CR>
 nnoremap <C-k> :tabl<CR>
