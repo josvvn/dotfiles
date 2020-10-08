@@ -24,7 +24,7 @@ Plug 'morhetz/gruvbox'
 Plug 'junegunn/limelight.vim' 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
-Plugin 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 colorscheme gruvbox
