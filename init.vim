@@ -15,6 +15,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set colorcolumn=80
+let g:asmsyntax = "masm"
 set clipboard=unnamed " Vim and System clipboard are the same
 
 highlight ColorColumn ctermbg=0 guibg=lightgrey
@@ -25,6 +26,8 @@ Plug 'junegunn/limelight.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/nerdtree'
 Plug 'jiangmiao/auto-pairs'
+Plug 'haya14busa/incsearch.vim'
+Plug 'psliwka/vim-smoothie'
 call plug#end()
 
 colorscheme gruvbox
@@ -46,3 +49,12 @@ nnoremap <C-k> :tabl<CR>
 
 nnoremap <silent> <Leader>; :vertical resize +5<CR>
 nnoremap <silent> <Leader>' :vertical resize -5<CR>
+
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
