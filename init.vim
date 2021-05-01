@@ -14,7 +14,6 @@ set nobackup
 set undodir=~/.vim/undodir
 set undofile
 set incsearch
-set colorcolumn=80
 let g:asmsyntax = "masm"
 set clipboard=unnamed " Vim and System clipboard are the same
 
@@ -58,3 +57,5 @@ map *  <Plug>(incsearch-nohl-*)
 map #  <Plug>(incsearch-nohl-#)
 map g* <Plug>(incsearch-nohl-g*)
 map g# <Plug>(incsearch-nohl-g#)
+
+set guifont=Perfect\ DOS\ VGA\ 437\ Win:h18 "for Neovide
