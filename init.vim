@@ -45,20 +45,25 @@ set background=dark
 
 let $PATH = "C:\\Program Files\\Git\\usr\\bin;" . $PATH  " preview in FZF was not working so this was needed (at least on windows)
 
-let g:vimwiki_list = [{'zettel_template': "./zettel_template.tpl",
-                \ 'syntax': 'markdown', 'ext': '.md', 'custom_wiki2html': 'vimwiki_markdown',
-                \ 'html_filename_parameterization': 1, 'template_ext': '.tpl'}]
+"let g:vimwiki_list = [{'zettel_template': './zettel_template.tpl',
+"                \ 'syntax': 'markdown', 'ext': '.md', 'custom_wiki2html': 'vimwiki_markdown',
+"                \ 'html_filename_parameterization': 1, 'template_ext': '.tpl'}]
+let g:vimwiki_list = [{'path': '~/vimwiki', 'template_path': '~/vimwiki/templates/',
+          \ 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md',
+          \ 'path_html': '~/vimwiki/site_html/', 'custom_wiki2html': 'vimwiki_markdown',
+          \ 'html_filename_parameterization': 1,
+          \ 'template_ext': '.tpl'}]
 
 let g:asmsyntax = "masm"
 let g:lightline = { 'colorscheme': 'challenger_deep'}
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
-"let g:zettel_options = [{"template" :  "./zettel_template.tpl"}]
+let g:zettel_options = [{"template" :  './zettel_template.tpl'}]
 let g:zettel_random_chars = 4
 let g:zettel_format = "%d%m%y%random %title"
 let g:zettel_date_format = "%d-%m-%y"
-let g:zettel_link_format="[[%link|*%title*]]"
-"let g:zettel_link_format="[*%title*](%link)"
+"let g:zettel_link_format="[[%link|%title]]"
+let g:zettel_link_format="[%title](%link)"
 
 let g:zettel_default_mappings = 0
 augroup filetype_vimwiki
@@ -93,6 +98,35 @@ nnoremap m d
 
 nnoremap <silent> <Leader>; :vertical resize +5<CR>
 nnoremap <silent> <Leader>' :vertical resize -5<CR>
+
+" CoC completion
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+"--------------------------------------------------------------------------------
 
 set hlsearch
 let g:incsearch#auto_nohlsearch = 1
