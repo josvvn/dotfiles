@@ -26,18 +26,30 @@ endif
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 call plug#begin('~/.vim/plugged')
-Plug 'junegunn/limelight.vim' 
+
+" ========= Code Completion ========
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mattn/emmet-vim'
+" ==================================
+
+" ============ Utility =============
 Plug 'preservim/nerdtree'
 Plug 'jiangmiao/auto-pairs'
 Plug 'haya14busa/incsearch.vim'
 Plug 'psliwka/vim-smoothie'
-Plug 'itchyny/lightline.vim'
-Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+Plug 'junegunn/limelight.vim' 
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'michal-h21/vim-zettel'
+" ==================================
+
+
+" =========== Aesthetics ===========
+Plug 'itchyny/lightline.vim'
+Plug 'challenger-deep-theme/vim', { 'as': 'challenger-deep' }
+" ==================================
+
 call plug#end()
 
 colorscheme challenger_deep
@@ -45,43 +57,15 @@ set background=dark
 
 let $PATH = "C:\\Program Files\\Git\\usr\\bin;" . $PATH  " preview in FZF was not working so this was needed (at least on windows)
 
-"let g:vimwiki_list = [{'zettel_template': './zettel_template.tpl',
-"                \ 'syntax': 'markdown', 'ext': '.md', 'custom_wiki2html': 'vimwiki_markdown',
-"                \ 'html_filename_parameterization': 1, 'template_ext': '.tpl'}]
-let g:vimwiki_list = [{'path': '~/vimwiki', 'template_path': '~/vimwiki/templates/',
-          \ 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md',
-          \ 'path_html': '~/vimwiki/site_html/', 'custom_wiki2html': 'vimwiki_markdown',
-          \ 'html_filename_parameterization': 1,
-          \ 'template_ext': '.tpl'}]
 
 let g:asmsyntax = "masm"
 let g:lightline = { 'colorscheme': 'challenger_deep'}
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
-let g:zettel_options = [{"template" :  './zettel_template.tpl'}]
-let g:zettel_random_chars = 4
-let g:zettel_format = "%d%m%y%random %title"
-let g:zettel_date_format = "%d-%m-%y"
-"let g:zettel_link_format="[[%link|%title]]"
-let g:zettel_link_format="[%title](%link)"
-
-let g:zettel_default_mappings = 0
-augroup filetype_vimwiki
-    autocmd!
-    autocmd FileType vimwiki imap <silent> ]] ]]<esc><Plug>ZettelSearchMap
-    autocmd FileType vimwiki nmap T <Plug>ZettelYankNameMap
-    autocmd FileType vimwiki xmap z <Plug>ZettelNewSelectedMap
-    autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
-    autocmd Filetype vimwiki nmap <BS> <Plug>VimwikiGoBackLink
-augroup END
 
 let mapleader = " "
- 
-" NERDTree starts automatically when open Vim in a directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
-" My Keybindings
+" ======================== My Keybindings =====================
 nnoremap <C-p> :NERDTreeToggle<CR>
 nnoremap <C-j> :tabp<CR>
 nnoremap <C-k> :tabn<CR>
@@ -89,15 +73,19 @@ nnoremap <leader>zn :ZettelNew<space>
 
 nmap <leader>[ <Plug>VimwikiGoBackLink
 nmap <C-i> <Plug>VimwikiIndex
-" Redirect all delete-operations to black-hole
-" Use 'm' ("move") for all cut-operations
 nnoremap d "_d
 vnoremap d "_d
 nnoremap m d
-"nnoremap <leader>p "_dP
 
 nnoremap <silent> <Leader>; :vertical resize +5<CR>
 nnoremap <silent> <Leader>' :vertical resize -5<CR>
+
+" =============================================================
+
+
+" ======================== Plugin Default Config/Keybindings =====================
+
+" ============================= CoC ==============================
 
 " CoC completion
 " Use tab for trigger completion with characters ahead and navigate.
@@ -126,7 +114,58 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-"--------------------------------------------------------------------------------
+" ===============================================================
+
+
+" ========================== Vimwiki ============================
+
+let g:vimwiki_list = [{'path': '~/vimwiki', 'template_path': '~/vimwiki/templates/',
+          \ 'template_default': 'default', 'syntax': 'markdown', 'ext': '.md',
+          \ 'path_html': '~/vimwiki/site_html/', 'custom_wiki2html': 'vimwiki_markdown',
+          \ 'html_filename_parameterization': 1,
+          \ 'template_ext': '.tpl'}]
+
+augroup filetype_vimwiki
+    autocmd!
+    autocmd FileType vimwiki imap <silent> ]] ]]<esc><Plug>ZettelSearchMap
+    autocmd FileType vimwiki nmap T <Plug>ZettelYankNameMap
+    autocmd FileType vimwiki xmap z <Plug>ZettelNewSelectedMap
+    autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
+    autocmd Filetype vimwiki nmap <BS> <Plug>VimwikiGoBackLink
+augroup END
+
+" ===============================================================
+
+" =========================== Emmet =============================
+
+let g:user_emmet_leader_key='<C-Z>'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
+
+" ===============================================================
+
+" ========================== NERDTree ===========================
+
+" NERDTree starts automatically when open Vim in a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
+
+" ===============================================================
+
+" ========================== Vim-Zettel =========================
+
+let g:zettel_options = [{"template" :  './zettel_template.tpl'}]
+let g:zettel_random_chars = 4
+let g:zettel_format = "%d%m%y%random %title"
+let g:zettel_date_format = "%d-%m-%y"
+let g:zettel_link_format="[%title](%link)"
+
+let g:zettel_default_mappings = 0
+
+" ===============================================================
+
+" ================================================================================
+ 
 
 set hlsearch
 let g:incsearch#auto_nohlsearch = 1
