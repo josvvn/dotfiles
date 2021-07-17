@@ -1,4 +1,4 @@
-
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 set nocompatible
 filetype plugin on
 syntax on
@@ -18,6 +18,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set clipboard=unnamed " Vim and System clipboard are the same
+set runtimepath^=$NVIM_HOME/bundle/ctrlp.vim
 
 if has('nvim') || has('termguicolors')
   set termguicolors
@@ -39,8 +40,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'psliwka/vim-smoothie'
 Plug 'junegunn/limelight.vim' 
 Plug 'vimwiki/vimwiki'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'michal-h21/vim-zettel'
 " ==================================
 
@@ -55,13 +54,11 @@ call plug#end()
 colorscheme challenger_deep
 set background=dark
 
-let $PATH = "C:\\Program Files\\Git\\usr\\bin;" . $PATH  " preview in FZF was not working so this was needed (at least on windows)
-
-
 let g:asmsyntax = "masm"
 let g:lightline = { 'colorscheme': 'challenger_deep'}
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
+let g:ctrlp_map = '<leader> P'
 
 let mapleader = " "
 
@@ -79,6 +76,12 @@ nnoremap m d
 
 nnoremap <silent> <Leader>; :vertical resize +5<CR>
 nnoremap <silent> <Leader>' :vertical resize -5<CR>
+
+" Generate ctags silently
+nnoremap <leader>tt :silent !ctags -R . <CR>:redraw!<CR> 
+" Go to index of notes and set working directory to my notes
+nnoremap <leader>ni :e $NOTES_DIR/index.md<CR>:cd $NOTES_DIR<CR>
+
 
 " =============================================================
 
